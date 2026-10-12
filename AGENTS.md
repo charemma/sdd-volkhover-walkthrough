@@ -120,7 +120,7 @@ Every registered file MUST carry an explicit protocol value. AI MAY propose new 
 
 #### Extension
 
-Registered file names use one extension separated by a single period. The extension is recorded in the Extension column. The set of permitted extensions is closed. Only the following extensions are allowed:
+Registered file names use one extension separated by a single period, except dot-files without an extension per the **Dot-file extension** rule. The extension is recorded in the Extension column. The set of permitted extensions is closed. Only the following extensions are allowed:
 
 - `.txt`
 - `.md`
@@ -137,7 +137,7 @@ AI MAY propose new extensions; AI MUST NOT introduce them silently. Adding an ex
 
 #### Subfolder
 
-The Subfolder column holds a path relative to the project root, expressed without leading or trailing slashes. A single-level subfolder appears as `name`; nested subfolders appear as `name1/name2`. The cell is empty when the file lives at the project root. Subfolder path segments MUST consist only of lowercase English letters (a–z), digits (0–9), dashes (`-`), and underscores (`_`); path segments MUST NOT contain a period.
+The Subfolder column holds a path relative to the project root, expressed without leading or trailing slashes. A single-level subfolder appears as `name`; nested subfolders appear as `name1/name2`. The cell is empty when the file lives at the project root. Subfolder path segments MUST consist only of lowercase English letters (a–z), digits (0–9), dashes (`-`), and underscores (`_`); path segments MUST NOT contain a period, except a single leading dot per the **Leading dot** rule.
 
 Placement conventions:
 
@@ -167,7 +167,11 @@ The use of this column — whether a file requires it, and what the referenced f
 
 - Inventory change. Any change to the project's file inventory — creation, deletion, rename, or move — MUST be reflected in the File Registry. AI MUST propose the registry update (a complete row for additions; the affected row for changes; the deletion target for removals) and obtain explicit user approval. Only after approval MAY AI write the registry update or perform the file-system operation.
 
-- Naming convention. Registered file names and subfolder path segments MUST consist only of lowercase English letters (a–z), digits (0–9), dashes (`-`), and underscores (`_`). File extensions MUST follow the same restriction. AI MUST NOT register a non-conforming name and MUST propose a conforming alternative.
+- Naming convention. Registered file names and subfolder path segments MUST consist only of lowercase English letters (a–z), digits (0–9), dashes (`-`), and underscores (`_`), except as allowed by the **Leading dot** rule. File extensions MUST follow the same restriction. AI MUST NOT register a non-conforming name and MUST propose a conforming alternative.
+
+- Leading dot. A file name or subfolder path segment MAY start with a single leading dot (e.g. `.gitignore`, `.ai`, `.python-version`); the dot is part of the name, not an extension separator, and the rest of the name MUST follow the **Naming convention** rule.
+
+- Dot-file extension. A file whose name starts with a dot MAY have no extension.
 
 - Name uniqueness. No two entries in the File Registry MAY share the same combination of file name and extension, compared case-insensitively, regardless of subfolder. When a proposed file name collides with an existing entry, AI MUST flag the collision and propose a distinct name before registration.
 
