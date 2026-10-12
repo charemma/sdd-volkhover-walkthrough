@@ -1,0 +1,33 @@
+[project]
+name = "recon-mcp"
+version = "0.1.0"
+description = "TCP port enumeration for authorized penetration tests, restricted to an approved target scope."
+requires-python = "==3.12.*"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+]
+
+[project.scripts]
+recon-mcp = "recon_mcp.main:main"
+
+[build-system]
+requires = ["uv_build>=0.11,<0.12"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx2",
+    "pytest",
+    "ruff",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "PTH", "C4", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
