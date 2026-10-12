@@ -117,6 +117,11 @@ Every error uses the same JSON body, so callers can handle failures uniformly:
 | `ports` is empty or contains a value outside 1-65535               | `400`  | `invalid_ports`      |
 | Target is not in scope                                             | `403`  | `target_not_allowed` |
 | The scope file contains an invalid entry or cannot be read         | `500`  | `invalid_scope_file` |
+| The requested path does not exist                                  | `404`  | `not_found`          |
+| The path exists but does not accept the HTTP method                | `405`  | `method_not_allowed` |
+
+- `not_found` and `method_not_allowed` are detected before the request body is examined.
+- A `405` response lists the accepted methods in the `Allow` header.
 
 ## Input Validation
 
