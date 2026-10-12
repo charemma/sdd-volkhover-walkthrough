@@ -48,6 +48,38 @@ The project root contains a single reserved directory named `.tmp/` for AI's tra
 
 - Exactly one scratch directory exists, at the project root. AI MUST NOT create additional scratch directories elsewhere in the project.
 
+## Version Control
+
+- AI MAY create git commits in this repository without a separate request for each commit.
+
+- A commit MUST be created only after the change it contains has been approved by the user and fully written to disk, including any required File Registry update.
+
+- Each commit MUST contain exactly one logical step; unrelated changes MUST be split into separate commits.
+
+- Commit messages MUST follow Conventional Commits (https://www.conventionalcommits.org/en/v1.0.0/) in the form `type(scope): description`.
+
+- Commit messages MUST NOT contain AI attribution lines; write the message as plain project history instead.
+
+- Files in `.tmp/` MUST NOT be staged or committed; leave them untracked.
+
+- AI MUST NOT push; leave pushing to the user and report which branch is ready.
+
+- AI MUST NOT merge into `main`; leave merging to the user.
+
+- AI MUST NOT run force operations; ask the user to run them instead.
+
+- AI MUST NOT rebase, reset, or amend; record corrections as new commits (for example fixup commits) instead.
+
+- AI MUST NOT discard uncommitted work (`git restore <path>`, `git checkout -- <path>`, `git clean`, `git stash drop`, `git stash clear`) without asking the user first; ask and proceed only after explicit approval.
+
+- To unstage changes, AI MUST use `git restore --staged <path>` instead of `git reset`.
+
+- AI MUST NOT delete branches; leave branch cleanup to the user.
+
+- AI MUST NOT commit directly to `main`; commit on a feature branch instead.
+
+- When the current branch is `main`, AI MUST ask the user for a branch name before the first commit, then create and switch to that branch.
+
 ## File Registry
 
 The File Registry is the project's index of every file in it, structured as a table where each row represents one registered file. Every change to the file inventory MUST be reflected here before the file system is touched. Subfolders are not registered separately — they are derived from the Subfolder column of registered files, and exist on disk by virtue of having at least one file placed in them.
