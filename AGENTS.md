@@ -238,3 +238,14 @@ The use of this column — whether a file requires it, and what the referenced f
 |                                              | `.gitignore`                | config | editable   |              |              | Version control ignore patterns: declare which tool-managed transient paths stay out of git and out of the File Registry.                              |
 | `.ai/logs`                                   | `rule-conflict-log.md`      | log   | append-only |              |              | Audit log of runtime rule conflicts and their resolutions                                                                                               |
 | `.ai/specs`                                  | `001-enum-ports.md`         | spec  | editable    |              |              | Behavioral specification of the TCP port enumeration feature: its purpose, interface contract and constraints; source of truth for its implementation. |
+|  | `pyproject.toml` | code | generated | `001-enum-ports.md` | `gen-code.md` | Project metadata, dependencies and tool configuration (uv, ruff, pytest) of the implementation. |
+|  | `uv.lock` | code | generated | `pyproject.toml` | `gen-code.md` | Locked dependency resolution of the implementation, maintained by uv. |
+| `src/recon_mcp` | `__init__.py` | code | generated | `001-enum-ports.md` | `gen-code.md` | Package marker of the implementation package. |
+| `src/recon_mcp` | `scope.py` | code | generated | `001-enum-ports.md` | `gen-code.md` | Implementation of scope determination: locating and parsing the scope file and deciding whether a target is in scope. |
+| `src/recon_mcp` | `scanner.py` | code | generated | `001-enum-ports.md` | `gen-code.md` | Implementation of TCP port probing against a single target. |
+| `src/recon_mcp` | `api.py` | code | generated | `001-enum-ports.md`, `scope.py`, `scanner.py` | `gen-code.md` | Implementation of the HTTP interface: request validation, error mapping and the scan endpoint. |
+| `src/recon_mcp` | `main.py` | code | generated | `001-enum-ports.md`, `api.py` | `gen-code.md` | Implementation of service startup: startup checks and launching the HTTP server. |
+| `tests` | `test_scope.py` | code | generated | `001-enum-ports.md`, `scope.py` | `gen-code.md` | Tests verifying scope determination against the spec. |
+| `tests` | `test_scanner.py` | code | generated | `001-enum-ports.md`, `scanner.py` | `gen-code.md` | Tests verifying TCP port probing against the spec. |
+| `tests` | `test_api.py` | code | generated | `001-enum-ports.md`, `api.py` | `gen-code.md` | Tests verifying the HTTP interface against the spec. |
+| `tests` | `test_main.py` | code | generated | `001-enum-ports.md`, `main.py` | `gen-code.md` | Tests verifying service startup behavior against the spec. |
