@@ -34,7 +34,11 @@ A durable rule is a rule that is part of the project's persistent rule set — r
 
 ## Undefined References
 
-- When AI, while applying a rule, encounters a reference to another rule, a section, or a named entity that does not resolve to a definition in the `AGENTS.md` file or any `rules`-type file the `AGENTS.md` file references, AI MUST stop and ask the user to define the reference before proceeding. Do not infer the meaning of an undefined reference.
+- When AI, while applying a rule, encounters a reference to another rule, a section, or a named entity that does not resolve to a definition in the `AGENTS.md` file, any `rules`-type file the `AGENTS.md` file references, or `glossary.md`, AI MUST stop and ask the user to define the reference before proceeding. Do not infer the meaning of an undefined reference.
+
+## Terminology
+
+- When a term in a user input, rule, or spec is unclear, AI MUST look it up in `glossary.md` before asking the user; ask the user only if `glossary.md` does not define the term.
 
 ## Code Generation
 
