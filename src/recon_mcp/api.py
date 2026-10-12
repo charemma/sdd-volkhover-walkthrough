@@ -1,9 +1,11 @@
 """HTTP interface of enum_ports (spec 001-enum-ports.md, Interface and Input Validation)."""
 
 from fastapi import FastAPI, Request
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, StrictInt, StrictStr
+from starlette.exceptions import HTTPException
 
 from recon_mcp import scanner, scope
 
@@ -12,6 +14,8 @@ MAX_PORT = 65535
 
 HTTP_BAD_REQUEST = 400
 HTTP_FORBIDDEN = 403
+HTTP_NOT_FOUND = 404
+HTTP_METHOD_NOT_ALLOWED = 405
 HTTP_INTERNAL_ERROR = 500
 
 INVALID_REQUEST = "invalid_request"
@@ -19,6 +23,8 @@ INVALID_TARGET = "invalid_target"
 INVALID_PORTS = "invalid_ports"
 TARGET_NOT_ALLOWED = "target_not_allowed"
 INVALID_SCOPE_FILE = "invalid_scope_file"
+NOT_FOUND = "not_found"
+METHOD_NOT_ALLOWED = "method_not_allowed"
 
 
 class ScanRequest(BaseModel):
@@ -34,8 +40,30 @@ class ScanResponse(BaseModel):
 app = FastAPI(title="recon-mcp")
 
 
-def error_response(status: int, code: str, message: str) -> JSONResponse:
-    return JSONResponse(status_code=status, content={"error": {"code": code, "message": message}})
+def error_response(
+    status: int, code: str, message: str, headers: dict[str, str] | None = None
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=status,
+        content={"error": {"code": code, "message": message}},
+        headers=headers,
+    )
+
+
+@app.exception_handler(HTTPException)
+async def handle_routing_error(request: Request, error: HTTPException) -> Response:
+    if error.status_code == HTTP_NOT_FOUND:
+        return error_response(
+            HTTP_NOT_FOUND, NOT_FOUND, f"Path {request.url.path} does not exist.", error.headers
+        )
+    if error.status_code == HTTP_METHOD_NOT_ALLOWED:
+        return error_response(
+            HTTP_METHOD_NOT_ALLOWED,
+            METHOD_NOT_ALLOWED,
+            f"Method {request.method} is not allowed for {request.url.path}.",
+            error.headers,
+        )
+    return await http_exception_handler(request, error)
 
 
 @app.exception_handler(RequestValidationError)

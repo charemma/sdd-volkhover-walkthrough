@@ -228,6 +228,33 @@ def test_invalid_ports_are_reported_before_invalid_scope_file(
     assert error_code(response) == "invalid_ports"
 
 
+def test_unknown_path_is_not_found(client: TestClient) -> None:
+    """Error Response: a path that does not exist is 404 not_found."""
+    response = client.post("/nope", json={"target": LOOPBACK, "ports": [22]})
+    assert response.status_code == 404
+    assert response.json()["error"] == {
+        "code": "not_found",
+        "message": "Path /nope does not exist.",
+    }
+
+
+def test_wrong_method_is_method_not_allowed(client: TestClient) -> None:
+    """Error Response: a method the path does not accept is 405 method_not_allowed."""
+    response = client.get("/scan")
+    assert response.status_code == 405
+    assert error_code(response) == "method_not_allowed"
+    assert response.headers["allow"] == "POST"
+
+
+def test_wrong_method_is_reported_before_body_validation(
+    client: TestClient, scan_calls: list[tuple[str, list[int]]]
+) -> None:
+    """Error Response: method_not_allowed is detected before the body is examined."""
+    response = client.put("/scan", content=b"not json")
+    assert error_code(response) == "method_not_allowed"
+    assert scan_calls == []
+
+
 def test_invalid_scope_file_is_reported_before_target_not_allowed(
     client: TestClient, tmp_path: Path, scan_calls: list[tuple[str, list[int]]]
 ) -> None:
