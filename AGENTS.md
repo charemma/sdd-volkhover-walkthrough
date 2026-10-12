@@ -94,6 +94,7 @@ The Type column carries a categorical label describing what the file is. The set
 
 - `rules` — a file containing durable rules in the project's rule format.
 - `log` — a file accumulating timestamped entries.
+- `spec` — a file specifying a feature's intended behavior and the reasons for it; the source of truth that implementation is built from.
 
 AI MAY propose new types; AI MUST NOT introduce them silently. Adding a type requires explicit user approval and an entry here.
 
