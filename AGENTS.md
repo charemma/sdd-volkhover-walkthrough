@@ -70,6 +70,16 @@ The project root contains a single reserved directory named `.tmp/` for AI's tra
 
 - AI MUST NOT rebase, reset, or amend; record corrections as new commits (for example fixup commits) instead.
 
+- Corrections to a commit not yet on `main` MUST be committed with `git commit --fixup=<commit>`; do not create a standalone fix commit for them.
+
+- A commit is on `main` when it is reachable from `main` or from `origin/main`.
+
+- A correction touching content from several commits MUST be split into one fixup commit per target commit.
+
+- Fixup commits are exempt from the Conventional Commits rule; their message is the `fixup! <subject>` line that git generates.
+
+- AI MUST NOT squash fixup commits; leave squashing to the user before merging.
+
 - AI MUST NOT discard uncommitted work (`git restore <path>`, `git checkout -- <path>`, `git clean`, `git stash drop`, `git stash clear`) without asking the user first; ask and proceed only after explicit approval.
 
 - To unstage changes, AI MUST use `git restore --staged <path>` instead of `git reset`.
