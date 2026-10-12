@@ -4,7 +4,7 @@ This file states the instructions AI MUST follow when generating or regenerating
 
 ## Tech Stack
 
-- Code MUST target Python 3.12.
+- Code MUST support Python 3.12 and newer; declare `requires-python = ">=3.12"` and the ruff target version `py312` in `pyproject.toml`.
 - The HTTP API MUST be built with FastAPI.
 - The HTTP server MUST be uvicorn, declared as a runtime dependency and started from the console script `recon-mcp` in `pyproject.toml`; do not use `fastapi run` or a separate launcher script.
 - Dependencies and environments MUST be managed with uv; do not use pip, Poetry, or requirements files.
