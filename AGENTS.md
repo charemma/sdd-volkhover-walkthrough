@@ -36,6 +36,12 @@ A durable rule is a rule that is part of the project's persistent rule set — r
 
 - When AI, while applying a rule, encounters a reference to another rule, a section, or a named entity that does not resolve to a definition in the `AGENTS.md` file or any `rules`-type file the `AGENTS.md` file references, AI MUST stop and ask the user to define the reference before proceeding. Do not infer the meaning of an undefined reference.
 
+## Code Generation
+
+- When generating or regenerating a file of type `code`, AI MUST read `code-generator.md` and act as the role it defines.
+
+- Code generation MUST start in a session in which no other request has been processed; otherwise ask the user to start a new session instead of proceeding.
+
 ## Scratch Directory
 
 The project root contains a single reserved directory named `.tmp/` for AI's transient working files.
@@ -121,7 +127,7 @@ The Protocol column carries a behavioral discipline applied to the file. The set
 - `generated`: the file is a build artifact derived from the files in its Dependencies column, following the file in its Instructions column.
   - AI MUST NOT edit a `generated` file directly; change a file listed in its Dependencies or Instructions and regenerate instead.
   - The user SHOULD NOT edit a `generated` file directly; regeneration overwrites such edits.
-  - AI MUST generate the file only from its Dependencies and its Instructions file.
+  - AI MUST derive the file's content only from its Dependencies and its Instructions file.
   - The Dependencies column MUST list at least one registered file: the specs the file implements and any other `generated` files whose interfaces it uses.
   - The Instructions column MUST name a registered `rules` file holding the generation instructions.
   - When a file listed in Dependencies or Instructions changes, AI MUST flag the dependent `generated` files as stale and regenerate them only after user approval.
