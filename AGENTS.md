@@ -128,6 +128,9 @@ Registered file names use one extension separated by a single period. The extens
 - `.xlsx`
 - `.docx`
 - `.pptx`
+- `.py`
+- `.toml`
+- `.lock`
 
 AI MAY propose new extensions; AI MUST NOT introduce them silently. Adding an extension requires explicit user approval and an entry here.
 
