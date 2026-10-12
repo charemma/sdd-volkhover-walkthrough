@@ -32,6 +32,7 @@ Operators define the approved scope per engagement in a scope file, kept as a re
 - An entry is a single IP address (IPv4 or IPv6) or a CIDR range (for example `10.0.0.0/24`).
 - A target matches an entry if it is the same address or lies inside the range.
 - Hostnames are not valid entries, because their resolution can change after the scope was approved.
+- An IPv4-mapped IPv6 target (for example `::ffff:10.20.1.15`) does not match an IPv4 entry, and an IPv4 target does not match an IPv4-mapped IPv6 entry. Only loopback targets get this mapping treatment.
 
 ### Scope File
 
@@ -40,6 +41,9 @@ A scope file is a Markdown document that records the approved scope of an engage
 - The scope file path is taken from the environment variable `RECON_SCOPE_FILE`. If the variable is unset, the file `scope.md` in the service's working directory is used if it exists.
 - If `RECON_SCOPE_FILE` is set and the file does not exist, the service MUST refuse to start.
 - The entries are the list items under the heading `## In Scope`, one entry per list item. Everything else in the file is free text and is ignored, so the file can also hold engagement details such as client, contact, and time window.
+- The `## In Scope` section ends at the next heading of level 1 or 2.
+- A list item is a line starting with `-`, `*`, or `+` followed by a space; surrounding whitespace of the entry is ignored.
+- If the scope file exists but cannot be read as UTF-8 text, the scan request MUST be rejected with an `invalid_scope_file` error.
 - If any entry under `## In Scope` is invalid, the scan request MUST be rejected with an error naming the invalid entry.
 - The scope file is read on every scan request, so the scope in effect is always the one on disk.
 - If no scope file exists when a request is processed, it contributes no entries; only loopback targets are in scope.
@@ -56,6 +60,16 @@ Authorized by: J. Doe, ACME CISO. Window: 2026-10-12 to 2026-10-16.
 - 10.20.0.0/24
 - 10.20.1.15
 ```
+
+## Port Probing
+
+- A port is open if a TCP connection to it completes within 1 second; otherwise it counts as closed or filtered.
+- At most 100 ports are probed concurrently per request.
+- The target `localhost` is probed at `127.0.0.1`, without name resolution.
+
+## Service Startup
+
+- The service listens for HTTP requests on `127.0.0.1:8000`. The address is fixed; making it configurable is planned for a later iteration.
 
 ## Interface
 
@@ -102,7 +116,7 @@ Every error uses the same JSON body, so callers can handle failures uniformly:
 | `target` is neither a valid IP address nor `localhost`             | `400`  | `invalid_target`     |
 | `ports` is empty or contains a value outside 1-65535               | `400`  | `invalid_ports`      |
 | Target is not in scope                                             | `403`  | `target_not_allowed` |
-| The scope file contains an invalid entry                           | `500`  | `invalid_scope_file` |
+| The scope file contains an invalid entry or cannot be read         | `500`  | `invalid_scope_file` |
 
 ## Input Validation
 
@@ -111,8 +125,11 @@ Invalid requests are rejected before any scan happens.
 - `target` MUST be a literal IPv4 or IPv6 address, or the hostname `localhost`. Other hostnames are rejected, because resolving them could lead to scanning an address the caller did not name.
 - `ports` MUST contain at least one port.
 - Every port MUST be an integer from 1 to 65535.
+- A port value that is not a JSON integer (for example `true` or `22.5`) is a wrong type and reported as `invalid_request`; an integer outside 1-65535 is reported as `invalid_ports`.
+- Unknown fields in the request body are ignored.
 - Duplicate ports are allowed and are checked once.
 - Input validation happens before the scope check; an invalid target is reported as `invalid_target`, not `target_not_allowed`.
+- When a request has several problems, only the first one in this order is reported: `invalid_request`, `invalid_target`, `invalid_ports`, `invalid_scope_file`, `target_not_allowed`.
 
 ## Out of Scope
 
