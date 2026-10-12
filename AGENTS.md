@@ -115,6 +115,9 @@ The Type column carries a categorical label describing what the file is. The set
 - `rules` — a file containing durable rules in the project's rule format.
 - `log` — a file accumulating timestamped entries.
 - `spec` — a file specifying a feature's intended behavior and the reasons for it; the source of truth that implementation is built from.
+  - Files of type `spec` MUST be named `NNN-<name>.md`, where `NNN` is a three-digit number and `<name>` is a short souvlaki-case name (e.g. `001-enum-ports.md`).
+  - A new spec MUST take the number following the highest number ever assigned to a spec in the git history of `main` or of the current branch, including specs since removed; do not reuse a freed number.
+  - The number of an existing spec MUST NOT change; when renaming a spec, change only the `<name>` part.
 - `code`: a source, test, or build-configuration file of the implementation.
   - Files of type `code` MUST carry the `generated` protocol.
 - `config`: a file configuring a development tool for the repository itself, not for the implementation.
