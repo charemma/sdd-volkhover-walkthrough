@@ -114,6 +114,7 @@ The Type column carries a categorical label describing what the file is. The set
 - `code`: a source, test, or build-configuration file of the implementation.
   - Files of type `code` MUST carry the `generated` protocol.
 - `config`: a file configuring a development tool for the repository itself, not for the implementation.
+- `glossary`: a file defining project terms, each with its meaning and anti-meaning.
 
 AI MAY propose new types; AI MUST NOT introduce them silently. Adding a type requires explicit user approval and an entry here.
 
@@ -226,6 +227,7 @@ The use of this column — whether a file requires it, and what the referenced f
 | `.ai`                                        | `rule-conflict-protocol.md` | rules | editable    |              |              | Runtime rule conflict procedure — applies when a conflict is detected during request processing                                                         |
 | `.ai`                                        | `gen-code.md`               | rules | editable    |              |              | Technical code generation instructions: implementation-wide technical choices (stack, style, layout) applied when generating `code` files; not feature behavior or the generator's working process. |
 | `.ai`                                        | `code-generator.md`         | rules | editable    |              |              | Code generator role: identity, working discipline and verification duties AI adopts when generating `code` files; not technical choices. |
+| `.ai`                                        | `glossary.md`               | glossary | editable |              |              | Project vocabulary: meaning and anti-meaning of terms used in rules, specs and conversation; normative definitions stay in the defining file, which each entry names. |
 |                                              | `.gitignore`                | config | editable   |              |              | Version control ignore patterns: declare which tool-managed transient paths stay out of git and out of the File Registry.                              |
 | `.ai/logs`                                   | `rule-conflict-log.md`      | log   | append-only |              |              | Audit log of runtime rule conflicts and their resolutions                                                                                               |
 | `.ai/specs`                                  | `001-enum-ports.md`         | spec  | editable    |              |              | Behavioral specification of the TCP port enumeration feature: its purpose, interface contract and constraints; source of truth for its implementation. |
