@@ -97,6 +97,7 @@ The Type column carries a categorical label describing what the file is. The set
 - `spec` — a file specifying a feature's intended behavior and the reasons for it; the source of truth that implementation is built from.
 - `code`: a source, test, or build-configuration file of the implementation.
   - Files of type `code` MUST carry the `generated` protocol.
+- `config`: a file configuring a development tool for the repository itself, not for the implementation.
 
 AI MAY propose new types; AI MUST NOT introduce them silently. Adding a type requires explicit user approval and an entry here.
 
