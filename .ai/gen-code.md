@@ -8,6 +8,7 @@ This file states the instructions AI MUST follow when generating or regenerating
 - The HTTP API MUST be built with FastAPI.
 - Dependencies and environments MUST be managed with uv; do not use pip, Poetry, or requirements files.
 - Tests MUST be written with pytest.
+- ruff MUST be declared as a dev dependency in `pyproject.toml` (uv `dev` dependency group); do not rely on a globally installed ruff.
 
 ## Style
 
@@ -18,7 +19,7 @@ This file states the instructions AI MUST follow when generating or regenerating
 - File paths MUST be handled with `pathlib`; do not use `os.path`.
 - Collections SHOULD be built with comprehensions or generators; do not use append loops where one fits.
 - Linting and formatting MUST use ruff, configured in `pyproject.toml`; do not use a separate `ruff.toml`.
-- Generated code MUST pass `ruff check` and `ruff format --check`.
+- Generated code MUST pass `uv run ruff check` and `uv run ruff format --check`.
 
 ## Layout
 
@@ -27,3 +28,10 @@ This file states the instructions AI MUST follow when generating or regenerating
 - `pyproject.toml` and `uv.lock` MUST live at the project root.
 - Each test SHOULD name the spec section it verifies in its docstring.
 
+## Commands
+
+- Project commands MUST be run through uv as `uv run pytest`, `uv run ruff check` and `uv run ruff format --check`; do not invoke the tools directly or from an activated virtual environment.
+
+## Host Prerequisites
+
+- Generated code and its build configuration MUST require only uv on the contributor's host; declare any other tool as a dev dependency in `pyproject.toml` instead.
