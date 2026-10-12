@@ -10,7 +10,7 @@ A durable rule is a rule that is part of the project's persistent rule set — r
 
 - Durable rules MUST be recorded either in the `AGENTS.md` file at the project root or in a `rules`-type file that the project-root `AGENTS.md` references. Do not record durable rules in the user-global `AGENTS.md` or in any nested `AGENTS.md` inside a subfolder.
 
-- For any work involving durable rules — creating a new durable rule, editing an existing one, removing one, or analyzing them — AI MUST read `rule-analysis.md` at the project root and MUST follow the protocol stated there.
+- For any work involving durable rules — creating a new durable rule, editing an existing one, removing one, or analyzing them — AI MUST read `rule-analysis.md` and MUST follow the protocol stated there.
 
 - Changes to any file containing durable rules (additions, edits, deletions) MUST be recorded only after explicit user approval.
 
@@ -151,7 +151,7 @@ The Subfolder column holds a path relative to the project root, expressed withou
 
 Placement conventions:
 
-- Files of type `log` SHOULD be placed in the `logs/` subdirectory unless a specific reason exists otherwise.
+- Files of type `log` SHOULD be placed in the `.ai/logs/` subdirectory unless a specific reason exists otherwise.
 
 #### Description
 
@@ -216,9 +216,9 @@ The use of this column — whether a file requires it, and what the referenced f
 | Subfolder                                    | File                        | Type  | Protocol    | Dependencies | Instructions | Description                                                                                                                                             |
 | -------------------------------------------- | --------------------------- | ----- | ----------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |                                              | `AGENTS.md`                 | rules | editable    |              |              | Durable project rules and the index of all project files. \_Agent-imposed name and location (AGENTS.md convention, read by Claude Code and other coding agents); see Agent-imposed exemption rule.\_ |
-|                                              | `rule-analysis.md`          | rules | editable    |              |              | Rule analysis protocol — applies when creating or editing durable rules                                                                                 |
-|                                              | `rule-conflict-protocol.md` | rules | editable    |              |              | Runtime rule conflict procedure — applies when a conflict is detected during request processing                                                         |
-|                                              | `gen-code.md`               | rules | editable    |              |              | Code generation instructions: apply when generating or regenerating `code` files; hold implementation-wide technical choices, not feature behavior.      |
+| `.ai`                                        | `rule-analysis.md`          | rules | editable    |              |              | Rule analysis protocol — applies when creating or editing durable rules                                                                                 |
+| `.ai`                                        | `rule-conflict-protocol.md` | rules | editable    |              |              | Runtime rule conflict procedure — applies when a conflict is detected during request processing                                                         |
+| `.ai`                                        | `gen-code.md`               | rules | editable    |              |              | Code generation instructions: apply when generating or regenerating `code` files; hold implementation-wide technical choices, not feature behavior.      |
 |                                              | `.gitignore`                | config | editable   |              |              | Version control ignore patterns: declare which tool-managed transient paths stay out of git and out of the File Registry.                              |
-| `logs`                                       | `rule-conflict-log.md`      | log   | append-only |              |              | Audit log of runtime rule conflicts and their resolutions                                                                                               |
+| `.ai/logs`                                   | `rule-conflict-log.md`      | log   | append-only |              |              | Audit log of runtime rule conflicts and their resolutions                                                                                               |
 | `specs`                                      | `enum-ports.md`             | spec  | editable    |              |              | Behavioral specification of the TCP port enumeration feature: its purpose, interface contract and constraints; source of truth for its implementation. |
