@@ -105,6 +105,13 @@ The Protocol column carries a behavioral discipline applied to the file. The set
 - `read-only` — AI MUST NOT modify or delete the file; the user MAY edit it directly. The `Dependencies` and `Instructions` columns MUST be left empty for this protocol.
 - `append-only` — AI MAY only append new entries. AI MUST NOT delete or modify the file or any past entries; corrections MUST be added as new entries that reference the prior entry by its identifier. The user MAY still edit or delete the file directly. The `Dependencies` and `Instructions` columns MUST be left empty for this protocol.
 - `editable` — no protocol-level restrictions on modification; AI MAY modify the file as needed. Deletion requires user approval per the **Inventory change** rule. The `Dependencies` and `Instructions` columns MUST be left empty for this protocol.
+- `generated`: the file is a build artifact derived from the files in its Dependencies column, following the file in its Instructions column.
+  - AI MUST NOT edit a `generated` file directly; change a file listed in its Dependencies or Instructions and regenerate instead.
+  - The user SHOULD NOT edit a `generated` file directly; regeneration overwrites such edits.
+  - AI MUST generate the file only from its Dependencies and its Instructions file.
+  - The Dependencies column MUST list at least one registered file: the specs the file implements and any other `generated` files whose interfaces it uses.
+  - The Instructions column MUST name a registered `rules` file holding the generation instructions.
+  - When a file listed in Dependencies or Instructions changes, AI MUST flag the dependent `generated` files as stale and regenerate them only after user approval.
 
 Every registered file MUST carry an explicit protocol value. AI MAY propose new protocols; AI MUST NOT introduce them silently. Adding a protocol requires explicit user approval and an entry here.
 
