@@ -2,10 +2,6 @@
 
 This file states the instructions AI MUST follow when generating or regenerating a file of type `code`.
 
-## Inputs
-
-- Behavior not stated in a spec MUST NOT be invented; leave the affected file ungenerated and report the gap to the user instead.
-
 ## Tech Stack
 
 - Code MUST target Python 3.12.
