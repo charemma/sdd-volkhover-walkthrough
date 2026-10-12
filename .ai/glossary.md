@@ -4,8 +4,8 @@ Terms used in this project's rules, specs and conversation. Each entry states wh
 
 ## souvlaki-case
 
-- Meaning: synonym for kebab-case; lowercase words joined by dashes, e.g. `enum-ports`.
-- Not: snake_case or camelCase; also not the File Registry naming convention, which additionally allows underscores and digits.
+- Meaning: synonym for kebab-case; words of lowercase letters and digits joined by dashes, e.g. `ipv6-scan`.
+- Not: snake_case or camelCase; also not the File Registry naming convention, which additionally allows underscores.
 
 ## target
 
