@@ -6,6 +6,7 @@ This file states the instructions AI MUST follow when generating or regenerating
 
 - Code MUST target Python 3.12.
 - The HTTP API MUST be built with FastAPI.
+- The HTTP server MUST be uvicorn, declared as a runtime dependency and started from the console script `recon-mcp` in `pyproject.toml`; do not use `fastapi run` or a separate launcher script.
 - Dependencies and environments MUST be managed with uv; do not use pip, Poetry, or requirements files.
 - Tests MUST be written with pytest.
 - ruff MUST be declared as a dev dependency in `pyproject.toml` (uv `dev` dependency group); do not rely on a globally installed ruff.
