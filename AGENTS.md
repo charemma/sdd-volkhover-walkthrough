@@ -1,3 +1,5 @@
+> Parts of this file are adapted from Anatoly Volkhover's book _Agentic Spec-Driven Development_ (https://agentic-spec.com).
+
 ## Project Intent
 
 This project specifies `recon-mcp`, a small service for authorized penetration tests. It enumerates open TCP ports and identifies the services behind them, and it exposes both capabilities over an HTTP API and as MCP tools that an AI agent can call. Scans are restricted to an explicitly approved target scope. The specification is the source of truth; the implementation, container image, and deployment are built from it.

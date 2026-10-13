@@ -1,5 +1,7 @@
 # Rule Analysis Protocol
 
+> Adapted from Anatoly Volkhover's book _Agentic Spec-Driven Development_ (https://agentic-spec.com).
+
 This file states the protocol AI MUST follow when creating a new durable rule, editing an existing one, or analyzing them.
 
 ## Formatting Conventions

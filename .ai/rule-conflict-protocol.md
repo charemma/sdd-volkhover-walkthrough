@@ -1,5 +1,7 @@
 # Runtime Rule Conflict Protocol
 
+> Adapted from Anatoly Volkhover's book _Agentic Spec-Driven Development_ (https://agentic-spec.com).
+
 This file defines the procedure AI MUST follow when a runtime rule conflict is detected. The procedure has three steps, executed in order:
 
 - **Step 1: Log the Conflict**
