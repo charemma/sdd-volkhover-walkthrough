@@ -256,3 +256,4 @@ The use of this column — whether a file requires it, and what the referenced f
 | `tests` | `test_scanner.py` | code | generated | `001-enum-ports.md`, `scanner.py` | `gen-code.md` | Tests verifying TCP port probing against the spec. |
 | `tests` | `test_api.py` | code | generated | `001-enum-ports.md`, `api.py` | `gen-code.md` | Tests verifying the HTTP interface against the spec. |
 | `tests` | `test_main.py` | code | generated | `001-enum-ports.md`, `main.py` | `gen-code.md` | Tests verifying service startup behavior against the spec. |
+|  | `README.md` | docs | editable |  |  | Public project overview for human readers: what the project is, how its material is organized, and where that material comes from. _Platform-imposed name (README convention); see Platform-imposed exemption rule._ |
