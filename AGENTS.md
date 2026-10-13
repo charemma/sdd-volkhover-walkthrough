@@ -122,6 +122,7 @@ The Type column carries a categorical label describing what the file is. The set
   - Files of type `code` MUST carry the `generated` protocol.
 - `config`: a file configuring a development tool for the repository itself, not for the implementation.
 - `glossary`: a file defining project terms, each with its meaning and anti-meaning.
+- `docs`: a file for human readers explaining the project, its purpose and provenance; not rules, specs, or glossary entries.
 
 AI MAY propose new types; AI MUST NOT introduce them silently. Adding a type requires explicit user approval and an entry here.
 
