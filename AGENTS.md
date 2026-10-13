@@ -212,6 +212,10 @@ The use of this column — whether a file requires it, and what the referenced f
 
 - Agent-imposed exemption. The file `AGENTS.md` is exempt from the Naming Convention, Name Uniqueness, Path Discipline, and Subfolder Convention rules — its name and location are dictated by the AI agent. The registry's Description field for `AGENTS.md` MUST note this agent-imposed nature.
 
+- Platform-imposed exemption. The file `README.md` is exempt from the Naming Convention rule; its uppercase name follows the convention by which code hosting platforms display a repository's front page.
+
+- Platform-imposed note. The registry's Description field for `README.md` MUST note its platform-imposed name.
+
 - Scratch exemption. Files inside `.tmp/` are exempt from all File Registry rules — registration, naming, uniqueness, path discipline, type and protocol assignment. The scratch directory is governed by the **Scratch Directory** section above.
 
 - Ignored-path exemption. Paths matched by a pattern in `.gitignore` are exempt from all File Registry rules; they are tool-managed transient paths, not scratch directories.
